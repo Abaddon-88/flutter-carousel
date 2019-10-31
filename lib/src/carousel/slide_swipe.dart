@@ -64,9 +64,9 @@ class SlideSwipe extends StatelessWidget {
         value = initial
             ? initiate(index) ?? controller1.page - index
             : controller1.page - index;
-        value = (1 - (value.abs() * .2)).clamp(0.0, 1.0);
+        value = (1 - (value.abs() * props.activeSize)).clamp(0.0, 1.0);
         return Opacity(
-          opacity: pow(value, 4),
+          opacity: pow(value, props.opacity),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[

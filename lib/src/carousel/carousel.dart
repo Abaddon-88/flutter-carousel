@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_multi_carousel/src/carousel/multi_axis_carousel.dart';
-import 'package:flutter_multi_carousel/src/carousel/rotatingcarousel.dart';
-import 'package:flutter_multi_carousel/src/carousel/simple_carousel.dart';
 import 'package:flutter_multi_carousel/src/carousel/slide_swipe.dart';
-import 'package:flutter_multi_carousel/src/carousel/x_rotating_carousel.dart';
-import 'package:flutter_multi_carousel/src/carousel/zrotatingcarousel.dart';
 import 'package:flutter_multi_carousel/src/indicator/index.dart';
 import 'package:flutter_multi_carousel/src/services/renderer.dart';
 import 'package:flutter_multi_carousel/src/services/screen_ratio.dart';
@@ -56,6 +51,9 @@ class Carousel extends StatefulWidget {
   ///
   /// The default value of opacity is 0.5 nothing is initialised.
   ///
+  final double offset;
+  final double activeSize;
+  final double opacity;
 
   final double indicatorBackgroundOpacity;
   dynamic updateIndicator;
@@ -76,6 +74,9 @@ class Carousel extends StatefulWidget {
       this.unActiveIndicatorColor,
       this.indicatorBackgroundColor,
       this.activeIndicatorColor,
+      this.offset,
+      this.activeSize,
+      this.opacity,
       @required this.children})
       : super(key: key) {
     this.createState();
@@ -119,15 +120,14 @@ class _CarouselState extends State<Carousel> {
 
   @override
   Widget build(BuildContext context) {
-    offset = widget.type == "slideswiper" ? 0.8 : 1.0;
     Size size = MediaQuery.of(context).size;
     ScreenRatio.setScreenRatio(size: size);
     animatedFactor =
         widget.axis == Axis.horizontal ? widget.width : widget.height;
     widget.controller = new PageController(
-      initialPage: 0,
+      initialPage: 2,
       keepPage: true,
-      viewportFraction: offset,
+      viewportFraction: widget.offset,
     );
     return Container(
         child: Stack(
@@ -208,43 +208,6 @@ class _CarouselState extends State<Carousel> {
   }
 
   getCarousel(dynamic widget) {
-    dynamic carousel;
-    switch (widget.type.toLowerCase()) {
-      case "simple":
-        {
-          carousel = SimpleCarousel(widget);
-        }
-        break;
-      case "slideswiper":
-        {
-          carousel = SlideSwipe(widget);
-        }
-        break;
-
-      case "xrotating":
-        {
-          carousel = XcarouselState(widget);
-        }
-        break;
-      case "yrotating":
-        {
-          carousel = RotatingCarouselState(widget);
-        }
-        break;
-      case "zrotating":
-        {
-          carousel = ZcarouselState(widget);
-        }
-        break;
-      case "multirotating":
-        {
-          carousel = MultiAxisCarouselState(widget);
-        }
-        break;
-      default:
-        carousel = SimpleCarousel(widget);
-        break;
-    }
-    return carousel;
+    return SlideSwipe(widget);
   }
 }

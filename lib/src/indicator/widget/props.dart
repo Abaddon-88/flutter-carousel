@@ -7,11 +7,15 @@ class Props {
   final int totalPage;
   final double width;
   final PageController controller;
+  final double activeSize;
+  final double opacity;
   Props(
       {this.totalPage,
       this.selectedColor,
       this.unSelectedColor,
       this.currentPage,
       this.width,
-      this.controller});
+      this.controller,
+      this.activeSize,
+      this.opacity});
 }
