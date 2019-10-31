@@ -125,7 +125,7 @@ class _CarouselState extends State<Carousel> {
     animatedFactor =
         widget.axis == Axis.horizontal ? widget.width : widget.height;
     widget.controller = new PageController(
-      initialPage: 2,
+      initialPage: 0,
       keepPage: true,
       viewportFraction: widget.offset,
     );
